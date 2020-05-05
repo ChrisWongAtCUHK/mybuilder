@@ -7,6 +7,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"regexp"
 )
 
 // Reading files requires checking most calls for errors.
@@ -22,6 +23,13 @@ func main() {
 	// Perhaps the most basic file reading task is
 	// slurping a file's entire contents into memory.
 	dat, err := ioutil.ReadFile("./input.go")
+
 	check(err)
-	fmt.Print(string(dat))
+	s := string(dat)
+
+	r := regexp.MustCompile(`(?s)type A struct {(.*?)}`)
+	result := r.FindStringSubmatch(s)
+
+	fmt.Printf("%v\n", result[1])
+
 }
